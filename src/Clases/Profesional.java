@@ -20,36 +20,7 @@ public class Profesional extends Usuario{
     }
 
 
-    /**
-     * <h1>seguirUsuario(Usuario)</h1>
-     *
-     * Método que añade a un usuario previamente introducido por
-     * parámetro a la lista de usuarios seguidos por el usuario
-     * que llama al método en caso de que el usuario no se
-     * encuentre en la lista de ususarios seguidos.
-     * Precondiciones: el parámetro Usuario debe ser diferente de null.
-     * Postcondiciones: Devolverá la lista de usuarios seguidos por el usuario
-     * que llama al método.
-     * @param usuario Usuario previamente construido.
-     * @return ArrayList<Usuario> usuariosSeguidos.
-     */
-    @Override
-    public ArrayList<Usuario> seguirUsuario(Usuario usuario) {
-        boolean exit = false;
-        do {
-            for (Usuario x : this.getUsuariosSeguidos ( )) {
-                if (!x.equals (usuario)) {
-                    this.getUsuariosSeguidos ( ).add (usuario);
-                     exit = true;
-                }
-            }
-            if (this.getUsuariosSeguidos ( ).isEmpty ( )) {
-                this.getUsuariosSeguidos ( ).add (usuario);
-                exit = true;
-            }
-        } while (!exit);
-        return this.getUsuariosSeguidos ( );
-    }
+
 
 
     /**
@@ -114,6 +85,13 @@ public class Profesional extends Usuario{
     @Override
     public String toString() {
         return super.toString ( ) +
-                "\nApellidos: " + apellidos;
+                "\nApellidos: " + apellidos +
+        "\n*************************************************************";
     }
+
+    @Override
+    public void imprimirSugerenciaDePerfiles(ArrayList<Usuario> lista) {
+
+    }
+
 }

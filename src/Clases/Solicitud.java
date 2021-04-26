@@ -2,9 +2,13 @@ package Clases;
 
 public class Solicitud {
 
+    /**
+     * todo En realidad se podría poner en Profesional ya que realmente es ekl Profesional quien envia
+     */
     private Empresa empresa;
     private static int numeroSolicitud = 0;
     private String informaccionAdicional;
+    private String puestoSolicitado;
     private Profesional profesional;
 
     public Profesional getProfesional() {
@@ -15,7 +19,7 @@ public class Solicitud {
         this.profesional = profesional;
     }
 
-    public Solicitud(Profesional profesional, Empresa empresa, String informaccionAdicional) {
+    public Solicitud(Profesional profesional, Empresa empresa, String informaccionAdicional, String puestoSolicitado) {
         numeroSolicitud++;
         this.profesional = profesional;
         this.empresa = empresa;

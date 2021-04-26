@@ -4,6 +4,7 @@ import Clases.Comparador.ComparadorUsuarios;
 import Excepciones.NoEmployeeException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Empresa extends Usuario {
 
@@ -155,7 +156,8 @@ public class Empresa extends Usuario {
                 System.out.println(solicitud);
             }
         }
-
+        perfilesSugeridos.sort(Comparator.comparing(Usuario::getNickName));
+        perfilesSugeridos = (ArrayList<Usuario>) perfilesSugeridos.stream().distinct().collect(Collectors.toList());
         return perfilesSugeridos;
     }
 

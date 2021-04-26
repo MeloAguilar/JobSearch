@@ -3,6 +3,7 @@ package Clases;
 import Excepciones.NoFollowerException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Profesional extends Usuario {
 
@@ -63,8 +64,8 @@ public class Profesional extends Usuario {
      * @param empresa:              Empresa a la que se enviará la solicitud
      * @param informacionAdicional: informacion adicional que añade el usuario Profesional.
      */
-    public void enviarSolicitud(Empresa empresa, String informacionAdicional) {
-        Solicitud solicittud = new Solicitud (this, empresa, informacionAdicional);
+    public void enviarSolicitud(Empresa empresa, String informacionAdicional ,String puesto) {
+        Solicitud solicittud = new Solicitud (this, empresa, informacionAdicional, puesto);
         solicitudes.add (solicittud);
         empresa.getSolicitudes ( ).add (solicittud);
     }
@@ -115,8 +116,9 @@ public class Profesional extends Usuario {
             }
             System.out.println(perfilesSugeridos);
         }
-
-        return perfilesSugeridos;
+        perfilesSugeridos.sort(Comparator.comparing(Usuario::getNickName));
+        perfilesSugeridos = (ArrayList<Usuario>) perfilesSugeridos.stream().distinct().collect(Collectors.toList());
+         return perfilesSugeridos;
     }
 
 }

@@ -1,10 +1,12 @@
 package Clases;
 
+import Clases.Interfaces.UsuarioImp;
+
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
-public abstract class Usuario {
+public abstract class Usuario implements UsuarioImp {
 
     private String nombre;
     private String sector;

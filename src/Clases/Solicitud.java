@@ -1,5 +1,7 @@
 package Clases;
 
+import java.util.Objects;
+
 public class Solicitud {
 
     /**
@@ -41,6 +43,25 @@ public class Solicitud {
     public void setInformaccionAdicional(String informaccionAdicional) {
         this.informaccionAdicional = informaccionAdicional;
     }
+    public int getNumeroSolicitud() {
+        return numeroSolicitud;
+    }
+
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Solicitud)) return false;
+        Solicitud solicitud = (Solicitud) o;
+        return Objects.equals (getNumeroSolicitud ( ), solicitud.getNumeroSolicitud ( ));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash (getProfesional ( ));
+    }
 
     @Override
     public String toString() {
@@ -51,4 +72,6 @@ public class Solicitud {
                 "\nProfesional solicitante: \n" + profesional +
                 "\n***********************************************************";
     }
+
+
 }

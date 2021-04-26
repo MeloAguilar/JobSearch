@@ -25,7 +25,6 @@ public class Main {
         p3.seguirUsuario (p1);
         p3.seguirUsuario (p2);
         p3.seguirUsuario (p4);
-        p3.imprimirSugerenciaDePerfiles (((Empresa) p3).recogerProfesionalesSeguidos ());
         ArrayList<Usuario> usuariosQueSigue = ((Empresa) p3).recogerUsuariosQueHanEnviadoSolicitud ();
         System.out.println (usuariosQueSigue );
         System.out.println (((Empresa) p3).recogerUsuariosQueHanEnviadoSolicitud () );

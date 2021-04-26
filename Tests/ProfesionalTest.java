@@ -1,8 +1,7 @@
 import Clases.Profesional;
-import Clases.Usuario;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import Excepciones.NoEmployeeException;
 import Excepciones.NoFollowerException;
 import org.junit.jupiter.api.*;
 
@@ -14,14 +13,14 @@ public class ProfesionalTest {
     @Test
     public void CasoValidoSeguirUsuario(){
         darCuerpo ();
-        assertEquals (usuario.getUsuariosSeguidos (), usuario.seguirUsuario (usuario2));
+        assertEquals (usuario.getListaSeguidos (), usuario.seguirUsuario (usuario2));
     }
 
 
     @Test void CasoValidoUnfollowUser() throws NoFollowerException {
         darCuerpo ();
-        usuario.getUsuariosSeguidos ().add (usuario2);
-        assertEquals (usuario.getUsuariosSeguidos (), usuario.unFollowUsuario (usuario2));
+        usuario.getListaSeguidos ().add (usuario2);
+        assertEquals (usuario.getListaSeguidos (), usuario.unFollowUsuario (usuario2));
     }
 
 

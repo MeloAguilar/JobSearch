@@ -105,25 +105,25 @@ public class Empresa extends Usuario {
     }
 
 
-    public ArrayList<Usuario> recogerProfesionalesSeguidos() {
-        ArrayList<Usuario> profesionalesSeguidos = new ArrayList<> ( );
-        for (Usuario usuario : this.getUsuariosSeguidos ( )) {
-            try {
-                if (((Profesional) usuario).getApellidos ( ) != null) {
-                    profesionalesSeguidos.add ((Profesional) usuario);
+    @Override
+    public List<Usuario> getUltimosSeguidos() {
+        ArrayList<Usuario> usuariosFinales = new ArrayList<> ( );
+        int contador = this.getListaSeguidos ().size ( );
+        do {
+            for (Usuario usuario : this.getListaSeguidos ()) {
+                if(usuario instanceof Profesional || contador > 2) {
+                    usuariosFinales.remove (usuario);
+                    contador--;
                 }
-                //Todo PREGUNTAR A RAUL PORQUE ESTO ESTÁ MAL PERO NO SÉ COMO EVITAR LA EXCEPCION
-            } catch (ClassCastException e) {
-            }
-        }
-
-        return profesionalesSeguidos;
+            }//endForEach
+        } while (contador > 2);
+        return usuariosFinales;
     }
 
 
     /**
      * Método que recorre la lista de solicitudes enviadas a un Usuario de tipo
-     * Empresa y guarda a los Usuarios de tipo Profesional en otra lista para devolverla despues.
+     * Empresa y guarda a los Usuarios de tipo Profesional en otra lista para devolverla después.
      * Precondiciones: La lista de solicitudes de la empresa debe tener tamaño 1 o más.
      * Poscondiciones: Devolverá una lista con los Profesionales que han enviado una solicitud
      *
@@ -140,20 +140,13 @@ public class Empresa extends Usuario {
 
 
     @Override
-    public void imprimirSugerenciaDePerfiles(ArrayList<Usuario> lista) {
-        Profesional usuarioFinal = (Profesional) lista.get (lista.size ( ) - 1);
-        for (Usuario usuarioSeguido : usuarioFinal.getUsuariosSeguidos ( )) {
-            if (null != ((Profesional) usuarioSeguido).getApellidos ( )) {
-                System.out.println (usuarioSeguido);
-            }
-        }
-        Profesional usuarioAnterior = (Profesional) lista.get (lista.size ( ) - 2);
-        for (Usuario usuarioSeguido2 : usuarioAnterior.getUsuariosSeguidos ( )) {
-            if (null != ((Profesional) usuarioSeguido2).getApellidos ( )) {
-                System.out.println (usuarioSeguido2);
-            }
+    public List<Usuario> imprimirSugerenciaDePerfiles() {
+        ArrayList<Usuario> perfilesSugeridos = new ArrayList<> (  );
+        for(Usuario usuario : this.getListaSeguidos ()){
+            perfilesSugeridos.addAll ();
         }
 
+        return perfilesSugeridos;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package Clases;
 
-import com.sun.jdi.Type;
-
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
@@ -12,14 +10,14 @@ public abstract class Usuario {
     private String sector;
     private String nickName;
     private String passWord;
-    private ArrayList<Usuario> usuariosSeguidos;
+    private ArrayList<Usuario> listaSeguidos;
 
     public Usuario(String nombre, String sector, String nickName, String passWord) {
         this.nombre = nombre;
         this.sector = sector;
         this.nickName = nickName;
         this.passWord = passWord;
-        usuariosSeguidos = new ArrayList<> ( );
+        listaSeguidos = new ArrayList<> ( );
     }
 
     public String getNickName() {
@@ -71,12 +69,12 @@ public abstract class Usuario {
         return passWordOculta;
     }
 
-    public ArrayList<Usuario> getUsuariosSeguidos() {
-        return this.usuariosSeguidos;
+    public ArrayList<Usuario> getListaSeguidos() {
+        return this.listaSeguidos;
     }
 
-    public void setUsuariosSeguidos(ArrayList<Usuario> usuariosSeguidos) {
-        this.usuariosSeguidos = usuariosSeguidos;
+    public void setListaSeguidos(ArrayList<Usuario> listaSeguidos) {
+        this.listaSeguidos = listaSeguidos;
     }
 
     /**
@@ -93,23 +91,20 @@ public abstract class Usuario {
      * @param usuario Usuario previamente construido.
      * @return ArrayList<Usuario> usuariosSeguidos.
      */
-    public ArrayList<Usuario> seguirUsuario(Usuario usuario) {
+    public List<Usuario> seguirUsuario(Usuario usuario) {
         boolean exit = false;
-        int contador = 0;
         do {
-            for (Usuario x : this.getUsuariosSeguidos ( )) {
+            for (Usuario x : this.getListaSeguidos ( )) {
                 if (x.equals (usuario)) {
                     exit = true;
                 }
 
             }
-            contador++;
-            if (this.getUsuariosSeguidos ( ).isEmpty ( ) || contador > 0) {
-                this.getUsuariosSeguidos ( ).add (usuario);
-                exit = true;
-            }
+            this.getListaSeguidos ( ).add (usuario);
+            exit = true;
+
         } while (!exit);
-        return this.getUsuariosSeguidos ( );
+        return this.getListaSeguidos ( );
     }
 
 
@@ -145,7 +140,7 @@ public abstract class Usuario {
      * @param o1
      * @param o2
      * @return <ol>
-     *          <li>0: </li>
+     * <li>0: </li>
      * </ol>
      */
     public int compare(Usuario o1, Usuario o2) {
@@ -153,5 +148,21 @@ public abstract class Usuario {
     }
 
 
-    public abstract void imprimirSugerenciaDePerfiles(ArrayList<Usuario> lista);
+    public List<Usuario> getUltimosSeguidos() {
+        ArrayList<Usuario> usuariosFinales = new ArrayList<> ( );
+        usuariosFinales = this.getListaSeguidos ( );
+        int contador = this.getListaSeguidos ( ).size ( );
+        do {
+            for (Usuario usuario : this.getListaSeguidos ( )) {
+                //if(usuario instanceof Usuario || contador > 2){
+                usuariosFinales.remove (usuario);//
+                contador--;//contador solo baja cuando usuario es una instancia de Profesional.
+                //}enIf
+            }//endForEach
+        } while (contador > 2);
+        return usuariosFinales;
+    }
+
+
+    public abstract List<Usuario> imprimirSugerenciaDePerfiles(ArrayList<Usuario> lista);
 }

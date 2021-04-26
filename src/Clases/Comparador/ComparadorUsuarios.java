@@ -5,6 +5,9 @@ import Clases.Usuario;
 
 import java.util.Comparator;
 
+/**
+ * todo PREGUNTAR A RAUL SI ESTO SE PODRÍA HACER EN LA CLASE EN LA QUE LO NECESITO
+ */
 public class ComparadorUsuarios implements Comparator<Usuario> {
         private boolean asc;
         public ComparadorUsuarios(boolean asc) {

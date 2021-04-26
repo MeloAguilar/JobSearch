@@ -22,7 +22,7 @@ public class Profesional extends Usuario {
      * <p>
      * Método que borra a un usuario introducido mediante
      * parámetro de la lista de usuarios seguidos por el objeto
-     * que llama al método.
+     * que llama al método.<br/>
      * Precondiciones: usuario debe ser distinto de null
      * Postcondiciones: devolverá la lista de usuariosSeguidos por el
      * objeto que llama al método.
@@ -57,17 +57,18 @@ public class Profesional extends Usuario {
      * <p>
      * Método que crea una solicitud a partir de un parámetro Empresa y un String
      * que sirve para dar información adicional sobre el usuario que genera
-     * la solicitud.
+     * la solicitud.<br/>
      * Precondiciones: empresa y informacionAdicional deben ser diferentes de null.
      * Postcondiciones: ninguna
      *
      * @param empresa:              Empresa a la que se enviará la solicitud
      * @param informacionAdicional: informacion adicional que añade el usuario Profesional.
      */
-    public void enviarSolicitud(Empresa empresa, String informacionAdicional ,String puesto) {
+    public Solicitud enviarSolicitud(Empresa empresa, String informacionAdicional ,String puesto) {
         Solicitud solicittud = new Solicitud (this, empresa, informacionAdicional, puesto);
         solicitudes.add (solicittud);
         empresa.getSolicitudes ( ).add (solicittud);
+        return solicittud;
     }
 
 
@@ -87,37 +88,67 @@ public class Profesional extends Usuario {
     }
 
 
+    /**
+     * <h3>getUltimosSeguidos()</h3>
+     *
+     * Método que devuelve una lista con los dos últimos
+     * usuarios seguidos por el Profesional que llama
+     * al método.<br/>
+     * Precondiciones: La lista de usuarios seguidos debe ser,
+     * como mínimo, de longitud 1.
+     * Postcondiciones: Devolverá una lista de Empresas con
+     * longitud máxima de 2.
+     * @return usuariosFinales:
+     */
     @Override
     public List<Usuario> getUltimosSeguidos() {
-        ArrayList<Usuario> usuariosFinales = new ArrayList<> ( );
+        ArrayList<Usuario> usuariosFinales = new ArrayList<> (  );
         int contador = this.getListaSeguidos ().size ( );
-        do {
+        while (contador > 2) {
             for (Usuario usuario : this.getListaSeguidos ()) {
-                if(usuario instanceof Empresa || contador > 2) {
-                    usuariosFinales.remove (usuario);
+                if(!(usuario instanceof Empresa)) {
+                    usuariosFinales.add (this.getListaSeguidos ().get (contador-1));
                     contador--;
-                }//endIf
+
+                }
             }//endForEach
-        } while (contador > 2);
+            while (contador > 2){
+                usuariosFinales.remove (0);
+                contador--;
+            }
+        }
         return usuariosFinales;
     }
 
 
-
+    /**
+     * <h1>imprimirSugerenciaDePerfiles()</h1>
+     *
+     * Método que crea una lista de Usuario, recorre
+     * un lista de usuarios seguidos, si es un
+     * Usuario de tipo Empresa, lo añade
+     * a la lista creada, la ordena por orden alfabético
+     * y la devuelve.<br/>
+     * Precondiciones: el atributo listaSeguidos debe tener,
+     * como mínimo longitud 1.
+     * Postcondiciones: ninguna
+     * @return List<Usuario> perfilesSugeridos.
+     */
     @Override
     public List<Usuario> imprimirSugerenciaDePerfiles() {
+        ArrayList<Usuario> ultimosDosSugeridos = (ArrayList<Usuario>) this.getUltimosSeguidos ();
         ArrayList<Usuario> perfilesSugeridos = new ArrayList<> (  );
-        for(Usuario usuario : this.getListaSeguidos ()){
+        for(Usuario usuario : ultimosDosSugeridos){
             for(Usuario usuario2 : usuario.getListaSeguidos()){
                 if(usuario2 instanceof Empresa){
                     perfilesSugeridos.add(usuario);
 
                 }
             }
-            System.out.println(perfilesSugeridos);
+
         }
         perfilesSugeridos.sort(Comparator.comparing(Usuario::getNickName));
-        perfilesSugeridos = (ArrayList<Usuario>) perfilesSugeridos.stream().distinct().collect(Collectors.toList());
+        perfilesSugeridos = (ArrayList<Usuario>) ultimosDosSugeridos.stream().distinct().collect(Collectors.toList());
          return perfilesSugeridos;
     }
 

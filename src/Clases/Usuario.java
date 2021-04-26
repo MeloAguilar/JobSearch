@@ -125,7 +125,7 @@ public abstract class Usuario implements UsuarioImp {
         if (this == o) return true;
         if (!(o instanceof Usuario)) return false;
         Usuario usuario = (Usuario) o;
-        return getNickName().equals(usuario.getNickName());
+        return getNickName ( ).equals (usuario.getNickName ( ));
     }
 
     @Override
@@ -150,12 +150,16 @@ public abstract class Usuario implements UsuarioImp {
     }
 
     /**
+     *
+     * <h3>getUltimosSeguidos()</h3>
+     *
      * Método que devuelve un array con los últimos usuarios
      * seguidos por el Objeto de tipo Usuario.
-     * Precondiciones:
+     * Precondiciones: el listado de usuarios seguidos debe tener una
+     * longitud mayor a 0.
      * Postcondiciones:
      *
-     * @return
+     * @return List<Usuario> usuariosFinales.
      */
     public List<Usuario> getUltimosSeguidos() {
         ArrayList<Usuario> usuariosFinales = this.getListaSeguidos();
@@ -186,5 +190,4 @@ public abstract class Usuario implements UsuarioImp {
      * @return List<Usuario> perfilesSugeridos: lista que contiene los
      * dos ultimos Usuario seguidos por el Usuario que llama al método.
      */
-    public abstract List<Usuario> imprimirSugerenciaDePerfiles();
 }

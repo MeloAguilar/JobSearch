@@ -1,6 +1,5 @@
 package Clases;
 
-import Clases.Comparador.ComparadorUsuarios;
 import Excepciones.NoEmployeeException;
 
 import java.util.*;
@@ -60,8 +59,16 @@ public class Empresa extends Usuario {
      */
     public ArrayList<Profesional> contratarProfesional(Profesional profesional) {
         trabajadores.add (profesional);
+        for(Solicitud solicitud : this.solicitudes){
+            if(solicitud.getProfesional ().equals (profesional)){
+                solicitudes.remove (profesional);
+            }
+        }
         return trabajadores;
     }
+
+
+
 
 
     /**
@@ -106,18 +113,25 @@ public class Empresa extends Usuario {
     }
 
 
+
+
     @Override
     public List<Usuario> getUltimosSeguidos() {
-        ArrayList<Usuario> usuariosFinales = new ArrayList<> ( );
+        ArrayList<Usuario> usuariosFinales = new ArrayList<> (  );
         int contador = this.getListaSeguidos ().size ( );
-        do {
+        while (contador > 2) {
             for (Usuario usuario : this.getListaSeguidos ()) {
-                if(usuario instanceof Profesional || contador > 2) {
-                    usuariosFinales.remove (usuario);
+                if(!(usuario instanceof Profesional)) {
+                    usuariosFinales.add (this.getListaSeguidos ().get (contador-1));
                     contador--;
+
                 }
             }//endForEach
-        } while (contador > 2);
+            while (contador > 2){
+                usuariosFinales.remove (0);
+                contador--;
+            }
+        }
         return usuariosFinales;
     }
 
@@ -137,29 +151,29 @@ public class Empresa extends Usuario {
         for (Solicitud solicitud : this.getSolicitudes ( )) {
             profesionalesConSolicitud.add (solicitud.getProfesional ( ));
         }
-        Collections.sort (profesionalesConSolicitud, new ComparadorUsuarios (true));
+        profesionalesConSolicitud.sort (this::compare);
         return profesionalesConSolicitud;
     }
 
 
     @Override
     public List<Usuario> imprimirSugerenciaDePerfiles() {
+        ArrayList<Usuario> ultimosDosSugeridos = (ArrayList<Usuario>) this.getUltimosSeguidos ( );
         ArrayList<Usuario> perfilesSugeridos = new ArrayList<> (  );
-        for(Usuario usuario : this.getListaSeguidos ()){
-            for(Usuario usuario2 : usuario.getListaSeguidos()){
-                if(usuario2 instanceof Profesional){
-                    perfilesSugeridos.add(usuario2);
+        for (Usuario usuario : ultimosDosSugeridos) {
+            for (Usuario usuario2 : usuario.getListaSeguidos ( )) {
+                if (usuario2 instanceof Profesional) {
+                    perfilesSugeridos.add (usuario);
+
                 }
             }
-            System.out.println(perfilesSugeridos);
-            for(Solicitud solicitud:this.getSolicitudes()){
-                System.out.println(solicitud);
-            }
         }
-        perfilesSugeridos.sort(Comparator.comparing(Usuario::getNickName));
-        perfilesSugeridos = (ArrayList<Usuario>) perfilesSugeridos.stream().distinct().collect(Collectors.toList());
+        perfilesSugeridos.sort (Comparator.comparing (Usuario::getNickName));
+        perfilesSugeridos = (ArrayList<Usuario>) perfilesSugeridos.stream ( ).distinct ( ).collect (Collectors.toList ( ));
         return perfilesSugeridos;
     }
+
+
 
     @Override
     public String toString() {

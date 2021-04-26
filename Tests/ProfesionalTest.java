@@ -1,14 +1,16 @@
+import Clases.Empresa;
 import Clases.Profesional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import Clases.Solicitud;
 import Excepciones.NoFollowerException;
 import org.junit.jupiter.api.*;
 
 public class ProfesionalTest {
 
     private Profesional usuario;
-    private Profesional usuario2;
+    private Empresa usuario2;
 
     @Test
     public void CasoValidoSeguirUsuario(){
@@ -17,13 +19,20 @@ public class ProfesionalTest {
     }
 
 
-    @Test void CasoValidoUnfollowUser() throws NoFollowerException {
+    @Test
+    public void CasoNoValidoUnfollowUser() throws NoFollowerException {
         darCuerpo ();
         usuario.getListaSeguidos ().add (usuario2);
         assertEquals (usuario.getListaSeguidos (), usuario.unFollowUsuario (usuario2));
     }
 
 
+    @Test
+    public void CasoValidoEnviarSolicitud(){
+        darCuerpo ();
+        Solicitud solicitud = new Solicitud (usuario,usuario2,"Soy mu major", "director de Márquetin");
+        assertEquals (solicitud, usuario.enviarSolicitud (usuario2, "Soy mu major", "director de Márquetin"));
+    }
 
 
     public void darCuerpo(){
@@ -39,6 +48,6 @@ public class ProfesionalTest {
         String passWord2 = "Supercalifragilistico";
 
         this.usuario = new Profesional (nombre, sector, nickName, passWord, apellidos);
-        this.usuario2 = new Profesional (nombre2, sector2, nickName2, passWord2, apellidos2);
+        this.usuario2 = new Empresa (nombre2, sector2, nickName2, passWord2,900);
     }
 }

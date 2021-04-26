@@ -17,7 +17,7 @@ public abstract class Usuario {
         this.sector = sector;
         this.nickName = nickName;
         this.passWord = passWord;
-        listaSeguidos = new ArrayList<> ( );
+        listaSeguidos = new ArrayList<>();
     }
 
     public String getNickName() {
@@ -63,7 +63,7 @@ public abstract class Usuario {
      */
     public String ocultarPassword() {
         String passWordOculta = "";
-        for (int i = 0; i < passWord.length ( ); i++) {
+        for (int i = 0; i < passWord.length(); i++) {
             passWordOculta += "*";
         }
         return passWordOculta;
@@ -94,17 +94,17 @@ public abstract class Usuario {
     public List<Usuario> seguirUsuario(Usuario usuario) {
         boolean exit = false;
         do {
-            for (Usuario x : this.getListaSeguidos ( )) {
-                if (x.equals (usuario)) {
+            for (Usuario x : this.getListaSeguidos()) {
+                if (x.equals(usuario)) {
                     exit = true;
                 }
 
             }
-            this.getListaSeguidos ( ).add (usuario);
+            this.getListaSeguidos().add(usuario);
             exit = true;
 
         } while (!exit);
-        return this.getListaSeguidos ( );
+        return this.getListaSeguidos();
     }
 
 
@@ -113,7 +113,7 @@ public abstract class Usuario {
         return "\n*************************************************************" +
                 "\nUsuario: " + nickName +
                 "\nSector: " + sector +
-                "\nPassWord: " + this.ocultarPassword ( ) +
+                "\nPassWord: " + this.ocultarPassword() +
                 "\nNombre: " + nombre;
     }
 
@@ -123,12 +123,12 @@ public abstract class Usuario {
         if (this == o) return true;
         if (!(o instanceof Usuario)) return false;
         Usuario usuario = (Usuario) o;
-        return getNickName ( ).equals (usuario.getNickName ( ));
+        return getNickName().equals(usuario.getNickName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash (getNickName ( ));
+        return Objects.hash(getNickName());
     }
 
     /**
@@ -144,18 +144,24 @@ public abstract class Usuario {
      * </ol>
      */
     public int compare(Usuario o1, Usuario o2) {
-        return o1.getNickName ( ).compareTo (o2.getNickName ( ));
+        return o1.getNickName().compareTo(o2.getNickName());
     }
 
-
+    /**
+     * Método que devuelve un array con los últimos usuarios
+     * seguidos por el Objeto de tipo Usuario.
+     * Precondiciones:
+     * Postcondiciones:
+     *
+     * @return
+     */
     public List<Usuario> getUltimosSeguidos() {
-        ArrayList<Usuario> usuariosFinales = new ArrayList<> ( );
-        usuariosFinales = this.getListaSeguidos ( );
-        int contador = this.getListaSeguidos ( ).size ( );
+        ArrayList<Usuario> usuariosFinales = this.getListaSeguidos();
+        int contador = this.getListaSeguidos().size();
         do {
-            for (Usuario usuario : this.getListaSeguidos ( )) {
+            for (Usuario usuario : this.getListaSeguidos()) {
                 //if(usuario instanceof Usuario || contador > 2){
-                usuariosFinales.remove (usuario);//
+                usuariosFinales.remove(usuario);//
                 contador--;//contador solo baja cuando usuario es una instancia de Profesional.
                 //}enIf
             }//endForEach
@@ -164,5 +170,19 @@ public abstract class Usuario {
     }
 
 
-    public abstract List<Usuario> imprimirSugerenciaDePerfiles(ArrayList<Usuario> lista);
+    /**
+     * Método que muestra en pantalla los perfiles sugeridos para
+     * un Profesional.
+     * Dados los dos últimos perfiles de la lista
+     * de usuarios seguidos de un Profesional, se recogerá
+     * de la lista de usuarios seguidos de estos para mostrar
+     * solo las empresas que estos usuarios sigan.
+     * Precondiciones:
+     * Postcondiciones:
+     *
+     * @param lista : lista de Solicitudes de un Profesional.
+     * @return List<Usuario> perfilesSugeridos: lista que contiene los
+     * dos ultimos Usuario seguidos por el Usuario que llama al método.
+     */
+    public abstract List<Usuario> imprimirSugerenciaDePerfiles();
 }

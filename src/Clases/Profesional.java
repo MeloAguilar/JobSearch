@@ -95,59 +95,28 @@ public class Profesional extends Usuario {
                 if(usuario instanceof Empresa || contador > 2) {
                     usuariosFinales.remove (usuario);
                     contador--;
-                }
+                }//endIf
             }//endForEach
         } while (contador > 2);
         return usuariosFinales;
     }
 
 
-    /**
-     * Método que muestra en pantalla los perfiles sugeridos para
-     * un Profesional.
-     * Dados los dos últimos perfiles de la lista
-     * de usuarios seguidos de un Profesional, se recogerá
-     * de la lista de usuarios seguidos de estos para mostrar
-     * solo las empresas que estos usuarios sigan.
-     * Precondiciones:
-     * Postcondiciones:
-     *
-     * @param lista : lista de Solicitudes de un Profesional.
-     * @return
-     */
+
     @Override
-    public List<Usuario> imprimirSugerenciaDePerfiles(ArrayList<Usuario> lista) {
+    public List<Usuario> imprimirSugerenciaDePerfiles() {
+        ArrayList<Usuario> perfilesSugeridos = new ArrayList<> (  );
+        for(Usuario usuario : this.getListaSeguidos ()){
+            for(Usuario usuario2 : usuario.getListaSeguidos()){
+                if(usuario2 instanceof Empresa){
+                    perfilesSugeridos.add(usuario);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /**
-        Empresa usuarioFinal = (Empresa) lista.get (lista.size ( ) - 1);
-        for (Usuario usuarioSeguido : usuarioFinal.getUsuariosSeguidos ( )) {
-            if (null != ((Profesional) usuarioSeguido).getApellidos ( )) {
-                System.out.println (usuarioSeguido);
-            }
-        }
-        Profesional usuarioAnterior = null;
-        try {
-            (Profesional) lista.get (lista.size ( ) - 2);
-            for (Usuario usuarioSeguido2 : usuarioAnterior.getUsuariosSeguidos ( )) {
-                if (null != ((Profesional) usuarioSeguido2).getApellidos ( )) {
-                    System.out.println (usuarioSeguido2);
                 }
             }
-        }catch{}
-*/
+            System.out.println(perfilesSugeridos);
+        }
+
+        return perfilesSugeridos;
     }
 
 }

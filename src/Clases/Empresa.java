@@ -121,6 +121,8 @@ public class Empresa extends Usuario {
     }
 
 
+
+
     /**
      * Método que recorre la lista de solicitudes enviadas a un Usuario de tipo
      * Empresa y guarda a los Usuarios de tipo Profesional en otra lista para devolverla después.
@@ -143,7 +145,15 @@ public class Empresa extends Usuario {
     public List<Usuario> imprimirSugerenciaDePerfiles() {
         ArrayList<Usuario> perfilesSugeridos = new ArrayList<> (  );
         for(Usuario usuario : this.getListaSeguidos ()){
-            perfilesSugeridos.addAll ();
+            for(Usuario usuario2 : usuario.getListaSeguidos()){
+                if(usuario2 instanceof Profesional){
+                    perfilesSugeridos.add(usuario2);
+                }
+            }
+            System.out.println(perfilesSugeridos);
+            for(Solicitud solicitud:this.getSolicitudes()){
+                System.out.println(solicitud);
+            }
         }
 
         return perfilesSugeridos;
